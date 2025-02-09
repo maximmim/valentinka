@@ -1,0 +1,161 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+    font-family: 'Roboto', sans-serif;
+}
+        body {
+            background-color: rgb(224, 143, 170);
+        }
+
+
+        .cur {
+            font-weight: bold;
+        }
+        .crs {
+            display: inline-block;
+            width: 8px;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .blnk {
+            opacity: 0;
+        }
+        #typing-container {
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            top: 40%;
+            color: white;
+        }
+        
+        .yes {
+            position: fixed;
+            left: 33%;
+            transform: translate(-50%,-50%);
+            top: 55%;
+            color: white;  
+            padding: 3px 20px;
+            border: none;
+            font-size: 2em;
+            background-color: rgb(57, 142, 57);
+        }        
+        .no {
+            position: fixed;
+            left: 67%;
+            transform: translate(-50%,-50%);
+            top: 55%;
+            color: white;     
+            padding: 3px 20px;
+            border: none;
+            font-size: 2em;
+            background-color: rgb(158, 71, 71);
+        }
+        .spoty {
+            position: fixed;
+            left: 30%;
+            transform: translate(-50%,-50%) rotate(10deg);
+            top: 15%;
+            width: 200px;
+        }
+        .spoty2 {
+            position: fixed;
+            left: 30%;
+            transform: translate(-50%,0px) rotate(10deg);
+            bottom: 5%;
+            width: 200px;
+        }
+        .kit {
+            position: fixed;
+            left: 93%;
+            transform: translate(-50%,-50%) rotate(-15deg);
+            top: 20%;
+            width: 350px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <img src="spoty.gif" alt="spotty" class="spoty">
+    <img src="spotty2.gif" alt="spotty2" class="spoty2">
+    <img src="kit.png" alt="kit" class="kit">
+
+    <h1 id="typing-container">Valentin</h1>
+
+
+    <button onclick="alert('Люблю тебя, красотка💋💋💋')" class="yes">Yes</button>
+    <button onclick="no()" class="no">No</button>
+
+
+    <script>
+        function no() {
+            alert("Подумай еще разок");
+            document.getElementsByClassName("yes")[0].style.left = "50%";
+            document.getElementsByClassName("yes")[0].style.top = "50%";
+            document.getElementsByClassName("yes")[0].style.width = "100%";
+            document.getElementsByClassName("yes")[0].style.height = "100%";
+            document.getElementById("typing-container").style.display = "none";
+            document.getElementsByClassName("no")[0].style.display = "none";
+            document.getElementsByClassName("kit")[0].style.display = "none";
+            document.getElementsByClassName("spoty")[0].style.display = "none";
+            document.getElementsByClassName("spoty2")[0].style.display = "none";
+        }
+        const txtArr = [
+            "Will you be my Valentine?",
+    
+        ];
+    
+        function typeText(element, text, speed, callback) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML = text.slice(0, i + 1) + '<span class="crs">|</span>';
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    setTimeout(() => callback(), 13000);
+                }
+            }
+            type();
+        }
+    
+        function deleteText(element, text, speed, callback) {
+            let i = text.length;
+            function del() {
+                if (i > 0) {
+                    element.innerHTML = text.slice(0, i - 1) + '<span class="crs">|</span>';
+                    i--;
+                    setTimeout(del, speed);
+                } else {
+                    element.innerHTML = '<span class="crs blnk">|</span>';
+                    setTimeout(callback, 3000);
+                }
+            }
+            del();
+        }
+    
+        function startTypingCycle() {
+            const container = document.getElementById("typing-container");
+            let text = txtArr[Math.floor(Math.random() * txtArr.length)];
+    
+            typeText(container, text, 100, () => {
+                deleteText(container, text, 50, startTypingCycle);
+            });
+        }
+    
+        startTypingCycle();
+
+    </script>
+</body>
+</html>
